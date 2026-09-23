@@ -1,10 +1,10 @@
 // ====== 📸 ပုံများ ======
 const photos = [
-  "images/images (4).jpg",
-  "images/images (5).jpg",
-  "images/images (6).jpg",
-  "images/images (7).jpg",
-  "images/images (8).jpg"
+  "images/pan1.jpg",
+  "images/pan2.jpg",
+  "images/pan3.jpg",
+  "images/pan4.jpg",
+  "images/pan5.jpg",
 ];
 // ပုံမရှိသေးရင် placeholder:
 // "https://picsum.photos/400/600?random=1" ... စသဖြင့်
@@ -45,41 +45,41 @@ const answerLines = [
   "အပြင်မှာ ပြန်တွေ့ရင်တော့ ပေးရမယ်နော် 😉",
   "",
   "လောလောဆယ်တော့ ကိုက ပန့်ကို အရမ်းချစ်တယ်ဆိုတာ ပန် ယုံထားရင် ရပီ",
-  "ပန့်နှလုံးသားလေးထဲမှာလဲ ကို တစ်ယောက်ပဲရှိနေရင် ရပီ 💕"
+  "ပန့်နှလုံးသားလေးထဲမှာလဲ ကို တစ်ယောက်ပဲရှိနေရင် ရပီ 💕",
 ];
 
 // ====== Elements ======
-const galleryScreen = document.getElementById('galleryScreen');
-const envelopeScreen = document.getElementById('envelopeScreen');
-const questionScreen = document.getElementById('questionScreen');
-const answerScreen = document.getElementById('answerScreen');
-const envelope = document.getElementById('envelope');
-const readBtn = document.getElementById('readBtn');
-const toEnvelopeBtn = document.getElementById('toEnvelopeBtn');
-const answerLinesBox = document.getElementById('answerLines');
-const finalHeart = document.getElementById('finalHeart');
-const bgMusic = document.getElementById('bgMusic');
-const musicBtn = document.getElementById('musicBtn');
-const musicIcon = document.getElementById('musicIcon');
-const swiperWrapper = document.getElementById('swiperWrapper');
+const galleryScreen = document.getElementById("galleryScreen");
+const envelopeScreen = document.getElementById("envelopeScreen");
+const questionScreen = document.getElementById("questionScreen");
+const answerScreen = document.getElementById("answerScreen");
+const envelope = document.getElementById("envelope");
+const readBtn = document.getElementById("readBtn");
+const toEnvelopeBtn = document.getElementById("toEnvelopeBtn");
+const answerLinesBox = document.getElementById("answerLines");
+const finalHeart = document.getElementById("finalHeart");
+const bgMusic = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+const musicIcon = document.getElementById("musicIcon");
+const swiperWrapper = document.getElementById("swiperWrapper");
 
 // ============================================
 // ===== 1️⃣ SWIPER GALLERY =====
 // ============================================
 function initGallery() {
-  photos.forEach(src => {
-    const slide = document.createElement('div');
-    slide.className = 'swiper-slide';
+  photos.forEach((src) => {
+    const slide = document.createElement("div");
+    slide.className = "swiper-slide";
     slide.innerHTML = `<img src="${src}" alt="memory"
       onerror="this.src='https://picsum.photos/400/600?random=${Math.random()}'">`;
     swiperWrapper.appendChild(slide);
   });
 
-  new Swiper('.mySwiper', {
-    effect: 'coverflow',
+  new Swiper(".mySwiper", {
+    effect: "coverflow",
     grabCursor: true,
     centeredSlides: true,
-    slidesPerView: 'auto',
+    slidesPerView: "auto",
     loop: true,
     autoplay: {
       delay: 2500,
@@ -93,7 +93,7 @@ function initGallery() {
       slideShadows: true,
     },
     pagination: {
-      el: '.swiper-pagination',
+      el: ".swiper-pagination",
       clickable: true,
     },
   });
@@ -108,30 +108,33 @@ let musicPlaying = false;
 
 function playMusic() {
   bgMusic.volume = 0.35;
-  bgMusic.play().then(() => {
-    musicPlaying = true;
-    musicIcon.textContent = '🎵';
-    musicBtn.classList.add('playing');
-  }).catch(err => console.log('Music blocked:', err));
+  bgMusic
+    .play()
+    .then(() => {
+      musicPlaying = true;
+      musicIcon.textContent = "🎵";
+      musicBtn.classList.add("playing");
+    })
+    .catch((err) => console.log("Music blocked:", err));
 }
 
 function toggleMusic() {
   if (musicPlaying) {
     bgMusic.pause();
     musicPlaying = false;
-    musicIcon.textContent = '🔇';
-    musicBtn.classList.remove('playing');
+    musicIcon.textContent = "🔇";
+    musicBtn.classList.remove("playing");
   } else {
     playMusic();
   }
 }
 
-musicBtn.addEventListener('click', toggleMusic);
+musicBtn.addEventListener("click", toggleMusic);
 
 // ============================================
 // ===== 1️⃣ → 2️⃣ Gallery → Envelope =====
 // ============================================
-toEnvelopeBtn.addEventListener('click', () => {
+toEnvelopeBtn.addEventListener("click", () => {
   // Music စ
   if (!musicPlaying) playMusic();
 
@@ -140,30 +143,32 @@ toEnvelopeBtn.addEventListener('click', () => {
     scale: 1.1,
     duration: 0.8,
     onComplete: () => {
-      galleryScreen.classList.add('hidden');
-      envelopeScreen.classList.remove('hidden');
-      envelopeScreen.classList.add('flex');
+      galleryScreen.classList.add("hidden");
+      envelopeScreen.classList.remove("hidden");
+      envelopeScreen.classList.add("flex");
       gsap.from(envelopeScreen, { opacity: 0, y: 30, duration: 0.8 });
-    }
+    },
   });
 });
 
 // ============================================
 // ===== 2️⃣ → 3️⃣ Envelope → Question =====
 // ============================================
-envelope.addEventListener('click', () => {
-  envelope.classList.add('open');
- 
+envelope.addEventListener("click", () => {
+  envelope.classList.add("open");
+
   setTimeout(() => {
     gsap.to(envelopeScreen, {
-      opacity: 0, y: -50, duration: 0.6,
+      opacity: 0,
+      y: -50,
+      duration: 0.6,
       onComplete: () => {
-        envelopeScreen.classList.add('hidden');
-        envelopeScreen.classList.remove('flex');
-        questionScreen.classList.remove('hidden');
-        questionScreen.classList.add('flex');
+        envelopeScreen.classList.add("hidden");
+        envelopeScreen.classList.remove("flex");
+        questionScreen.classList.remove("hidden");
+        questionScreen.classList.add("flex");
         gsap.from(questionScreen, { opacity: 0, scale: 0.9, duration: 0.8 });
-      }
+      },
     });
   }, 800);
 });
@@ -171,17 +176,18 @@ envelope.addEventListener('click', () => {
 // ============================================
 // ===== 3️⃣ → 4️⃣ Question → Answer =====
 // ============================================
-readBtn.addEventListener('click', () => {
+readBtn.addEventListener("click", () => {
   gsap.to(questionScreen, {
-    opacity: 0, duration: 0.5,
+    opacity: 0,
+    duration: 0.5,
     onComplete: () => {
-      questionScreen.classList.add('hidden');
-      questionScreen.classList.remove('flex');
-      answerScreen.classList.remove('hidden');
-      answerScreen.classList.add('flex');
+      questionScreen.classList.add("hidden");
+      questionScreen.classList.remove("flex");
+      answerScreen.classList.remove("hidden");
+      answerScreen.classList.add("flex");
       gsap.from(answerScreen, { opacity: 0, y: 30, duration: 0.8 });
       renderAnswerLines();
-    }
+    },
   });
 });
 
@@ -190,27 +196,33 @@ readBtn.addEventListener('click', () => {
 // ============================================
 function renderAnswerLines() {
   answerLines.forEach((line, i) => {
-    const p = document.createElement('p');
-    p.className = 'fade-line text-center';
-   
-    if (line === '') {
+    const p = document.createElement("p");
+    p.className = "fade-line text-center";
+
+    if (line === "") {
       p.innerHTML = '<div class="h-2"></div>';
     } else {
-      p.innerHTML = line.replace(/(ချစ်|💕|💗|❤️|🥰|🌸|😊|💪|😉)/g,
-        '<span class="text-pink-500 font-bold">$1</span>');
+      p.innerHTML = line.replace(
+        /(ချစ်|💕|💗|❤️|🥰|🌸|😊|💪|😉)/g,
+        '<span class="text-pink-500 font-bold">$1</span>',
+      );
     }
-   
+
     answerLinesBox.appendChild(p);
-   
+
     setTimeout(() => {
-      p.classList.add('show');
-    //   answerScreen.querySelector('.letter').scrollTop =
-    //     answerScreen.querySelector('.letter').scrollHeight;
-     
+      p.classList.add("show");
+      //   answerScreen.querySelector('.letter').scrollTop =
+      //     answerScreen.querySelector('.letter').scrollHeight;
+
       if (i === answerLines.length - 1) {
         setTimeout(() => {
-          finalHeart.classList.remove('hidden');
-          gsap.from(finalHeart, { scale: 0, duration: 0.8, ease: 'back.out(1.7)' });
+          finalHeart.classList.remove("hidden");
+          gsap.from(finalHeart, {
+            scale: 0,
+            duration: 0.8,
+            ease: "back.out(1.7)",
+          });
           startHeartsRain();
         }, 800);
       }
@@ -222,13 +234,13 @@ function renderAnswerLines() {
 // ===== HEART RAIN =====
 // ============================================
 function startHeartsRain() {
-  const hearts = ['❤️', '💕', '💖', '💗', '🌸'];
+  const hearts = ["❤️", "💕", "💖", "💗", "🌸"];
   setInterval(() => {
-    const heart = document.createElement('div');
-    heart.className = 'heart-float';
+    const heart = document.createElement("div");
+    heart.className = "heart-float";
     heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 4 + Math.random() * 3 + "s";
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 7000);
   }, 400);
